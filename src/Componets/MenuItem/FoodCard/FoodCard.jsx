@@ -51,7 +51,7 @@ const FoodCard = ({ item }) => {
     })
 
     const responseData = await res.json();
-    console.log(responseData)
+    
     if (responseData?.Inserted > 0) {
       toast.success(responseData.message, {
         position: "top-right",
