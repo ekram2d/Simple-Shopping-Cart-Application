@@ -83,57 +83,56 @@ const FoodCard = ({ item }) => {
   };
   // console.log(quantity,user )
   return (
-    <div className="card w-[100%] bg-base-100 shadow-xl ">
-      <ToastContainer />
-      <figure><img src={image} alt="Shoes" /></figure>
-      <p className='bg-slate-900 e absolute right-0 mt-4 mr-4 p-2'>${price}</p>
-      <div className="card-body flex flex-col items-center">
-        <h2 className="card-title">{name}</h2>
-        <p>{recipe}</p>
-
-        <div className="card">
-          {/* Other card content */}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <label className='text-sm'>
-              Enter your Quantity:
-              <input
-                className=' border bg-slate-100 py-1 px-4 rounded-md'
-                type="number"
-                {...register('quantity', { required: true })}
-                required />
-            </label>
-            <label className='text-sm'>
-              Enter your Name :
-              <input
-                className=' border bg-slate-100 py-1 px-4 rounded-md'
-                type="text"
-                {...register('name', { required: true })}
-                required />
-            </label>
-
-            <label className='text-sm'>
-
-              Enter your Mobile:
-              <input
-                className=' border bg-slate-100 py-1 px-4 rounded-md'
-                type="text"
-                {...register('mobile', { required: true })}
-                required />
-            </label>
-
-
-            {/*
-              Display an error message if the quantity field is required
-              and the user hasn't entered a value.
-            */}
-            {/* {errors.quantity && <p className="text-red-500">Quantity is required</p>} */}
-            <button onClick={handleAddToCart} className="btn btn-outline border-0 border-b-4 mt-4 bg-slate-100 border-orange-400">Add to cart</button>
-          </form>
-        </div>
-
-        {/* \ */}
+    <div className="card bg-base-100 shadow-xl w-full md:w-[90%]  p-4 rounded-lg ">
+    <ToastContainer />
+    <figure className="mb-4">
+      <img src={image} alt="Shoes" className="w-full rounded-md" />
+    </figure>
+    <p className="bg-slate-900 text-white e absolute top-0 right-0 p-2">${price}</p>
+    <div className="card-body flex flex-col items-center">
+      <h2 className="card-title text-xl font-semibold mb-2">{name}</h2>
+      <p className="text-gray-600 mb-4">{recipe}</p>
+  
+      <div className="card">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
+          <label className="text-sm">
+            Enter your Quantity:
+            <input
+              className="border bg-slate-100 py-1 px-4 rounded-md"
+              type="number"
+              {...register('quantity', { required: true })}
+              required
+            />
+          </label>
+          <label className="text-sm">
+            Enter your Name:
+            <input
+              className="border bg-slate-100 py-1 px-4 rounded-md"
+              type="text"
+              {...register('name', { required: true })}
+              required
+            />
+          </label>
+          <label className="text-sm">
+            Enter your Mobile:
+            <input
+              className="border bg-slate-100 py-1 px-4 rounded-md"
+              type="text"
+              {...register('mobile', { required: true })}
+              required
+            />
+          </label>
+          <button
+            onClick={handleAddToCart}
+            className="btn btn-outline border-0 border-b-4 bg-slate-100 border-orange-400 py-2 rounded-md hover:bg-slate-200 transition-colors"
+          >
+            Add to cart
+          </button>
+        </form>
       </div>
     </div>
+  </div>
+  
   );
 };
 
