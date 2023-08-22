@@ -1,32 +1,71 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../../providers/AuthoProvider';
+import { SetUser } from '../../../CustomHooks/SetUser/UserHook';
+import Swal from 'sweetalert2';
 
 const FoodCard = ({ item }) => {
-  const { name, image, price, recipe, _id } = item;
+  const { name, image, price, recipe, id } = item;
   const [quantity, setQuantity] = useState(0);
   const inputRef = useRef(null);
-  const { user,   setUser, loading } = useContext(AuthContext);
-  console.log(user)
+  const [ user,   setuser]= useState('');
+
+  // console.log(user)
     const { register, handleSubmit, formState: { errors } } = useForm();
 
   const handleAddToCart = () => {
     // Handle adding the item to the cart with the selected quantity
     console.log(`Adding ${quantity * price} ${name}(s) to the cart`);
-    setUser(name)
+    
   };
 
   const onSubmit = (data, e) => {
       e.preventDefault(); // Prevent form submission
-      console.log('Form submitted:', data);
+      // console.log('Form submitted:', data);
       const newUser = {
         name: data.name,
-        email: data.email,
+        mobile: data.mobile,
+        quantity:parseInt(quantity),
+        Food_name:name,
+        fOOdImg:image,
+        foodprice:price,
+        food_receipe:recipe,
+        foodId:id
       };
-      setUser(newUser);
-      setQuantity(parseInt(data.quantity, 10)); // Parse the quantity as an integer
+      setuser(newUser);
+      setQuantity(parseInt(data.quantity, 10));// Parse the quantity as an integer
+      SetUser(data.name,data.mobile)
+
+      // post method for adding order in database
+      const url='/orderItem'
+
+      fetch('url',{
+        method:'POST',
+        headers:{
+              'content-type':'application/json'
+
+        },
+        body:JSON.stringify(newUser)
+  })
+        .then(res => res.json())
+        .then(data => {
+              if (data.insertedId) {
+                refetch()
+                    Swal.fire({
+                          position: 'top-end',
+                          icon: 'success',
+                          title: 'Your cart added',
+                          showConfirmButton: false,
+                          timer: 1500
+                    })
+              }
+        })
+
+
+
+      // console.log(newUser);
     };
-    // console.log(quantity,setUser  )
+    // console.log(quantity,user )
   return (
     <div className="card w-[90%] bg-base-100 shadow-xl text-white">
       <figure><img src={image} alt="Shoes" /></figure>
@@ -54,10 +93,10 @@ const FoodCard = ({ item }) => {
             </label>
          
             <label className='text-sm'>
-              Enter your Email:
+              Enter your Mobile:
               <input
                 type="text"
-                {...register('email', { required: true })}
+                {...register('mobile', { required: true })}
               required/>
             </label>
 
