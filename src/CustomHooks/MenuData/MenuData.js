@@ -10,7 +10,7 @@ export const MenuData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://restaurent-backend-alam2025.vercel.app/menu?fbclid=IwAR0jFt-FndExqYaZXcYTC9Wuiscc5qYUhKhyJDDcG19njWIuQI9Sg4bF1VQ"); // Make sure the URL is correct
+        const response = await axios.get("https://restaurent-backend-alam2025.vercel.app/menu"); // Make sure the URL is correct
         setData(response.data);
         setIsLoading(false);
       } catch (error) {

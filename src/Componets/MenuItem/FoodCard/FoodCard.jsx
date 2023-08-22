@@ -11,7 +11,7 @@ const FoodCard = ({ item }) => {
   const [ user,   setuser]= useState('');
 
   // console.log(user)
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit,reset, formState: { errors } } = useForm();
 
   const handleAddToCart = () => {
     // Handle adding the item to the cart with the selected quantity
@@ -21,14 +21,15 @@ const FoodCard = ({ item }) => {
 
   const onSubmit = (data, e) => {
       e.preventDefault(); // Prevent form submission
+     console.log(data);
       // console.log('Form submitted:', data);
       const newUser = {
-        name: data.name,
+        customer_name: data.name,
         mobile: data.mobile,
         quantity:parseInt(quantity),
         Food_name:name,
-        fOOdImg:image,
-        foodprice:price,
+        foodImg:image,
+        foodPrice:price,
         food_receipe:recipe,
         foodId:id
       };
@@ -37,16 +38,15 @@ const FoodCard = ({ item }) => {
       SetUser(data.name,data.mobile)
 
       // post method for adding order in database
-      const url='/orderItem'
+      
 
-      fetch('url',{
+      fetch('http://localhost:3000/orderItem',{
         method:'POST',
         headers:{
-              'content-type':'application/json'
-
+              'Content-Type':'application/json'
         },
         body:JSON.stringify(newUser)
-  })
+          })
         .then(res => res.json())
         .then(data => {
               if (data.insertedId) {
@@ -67,9 +67,9 @@ const FoodCard = ({ item }) => {
     };
     // console.log(quantity,user )
   return (
-    <div className="card w-[90%] bg-base-100 shadow-xl text-white">
+    <div className="card w-[100%] bg-base-100 shadow-xl ">
       <figure><img src={image} alt="Shoes" /></figure>
-      <p className='bg-slate-900 text-white absolute right-0 mt-4 mr-4 p-2'>${price}</p>
+      <p className='bg-slate-900 e absolute right-0 mt-4 mr-4 p-2'>${price}</p>
       <div className="card-body flex flex-col items-center">
         <h2 className="card-title">{name}</h2>
         <p>{recipe}</p>
@@ -80,6 +80,7 @@ const FoodCard = ({ item }) => {
             <label className='text-sm'>
               Enter your Quantity:
               <input
+              className=' border bg-slate-100 py-1 px-4 rounded-md'
                 type="number"
                 {...register('quantity', { required: true })}
   required              />
@@ -87,14 +88,17 @@ const FoodCard = ({ item }) => {
             <label className='text-sm'>
               Enter your Name :  
               <input
+              className=' border bg-slate-100 py-1 px-4 rounded-md'
                 type="text"
                 {...register('name', { required: true })}
               required/>
             </label>
          
             <label className='text-sm'>
+
               Enter your Mobile:
               <input
+              className=' border bg-slate-100 py-1 px-4 rounded-md'
                 type="text"
                 {...register('mobile', { required: true })}
               required/>
