@@ -2,72 +2,88 @@ import React, { useContext, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../../providers/AuthoProvider';
 import { SetUser } from '../../../CustomHooks/SetUser/UserHook';
-import Swal from 'sweetalert2';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import useUrl from '../../../CustomHooks/URL/UseUrl';
 const FoodCard = ({ item }) => {
+  const [url]= useUrl();
   const { name, image, price, recipe, id } = item;
   const [quantity, setQuantity] = useState(0);
   const inputRef = useRef(null);
-  const [ user,   setuser]= useState('');
+  const [user, setuser] = useState('');
 
   // console.log(user)
-    const { register, handleSubmit,reset, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
   const handleAddToCart = () => {
     // Handle adding the item to the cart with the selected quantity
     console.log(`Adding ${quantity * price} ${name}(s) to the cart`);
-    
+
   };
 
-  const onSubmit = (data, e) => {
-      e.preventDefault(); // Prevent form submission
-     console.log(data);
-      // console.log('Form submitted:', data);
-      const newUser = {
-        customer_name: data.name,
-        mobile: data.mobile,
-        quantity:parseInt(quantity),
-        Food_name:name,
-        foodImg:image,
-        foodPrice:price,
-        food_receipe:recipe,
-        foodId:id
-      };
-      setuser(newUser);
-      setQuantity(parseInt(data.quantity, 10));// Parse the quantity as an integer
-      SetUser(data.name,data.mobile)
-
-      // post method for adding order in database
-      
-
-      fetch('http://localhost:3000/orderItem',{
-        method:'POST',
-        headers:{
-              'Content-Type':'application/json'
-        },
-        body:JSON.stringify(newUser)
-          })
-        .then(res => res.json())
-        .then(data => {
-              if (data.insertedId) {
-                refetch()
-                    Swal.fire({
-                          position: 'top-end',
-                          icon: 'success',
-                          title: 'Your cart added',
-                          showConfirmButton: false,
-                          timer: 1500
-                    })
-              }
-        })
-
-
-
-      // console.log(newUser);
+  const onSubmit = async (data, e) => {
+    e.preventDefault(); // Prevent form submission
+    console.log(data);
+    // console.log('Form submitted:', data);
+    const newUser = {
+      customer_name: data.name,
+      mobile: data.mobile,
+      quantity: parseInt(quantity),
+      Food_name: name,
+      foodImg: image,
+      foodPrice: price,
+      food_receipe: recipe,
+      foodId: id
     };
-    // console.log(quantity,user )
+    setuser(newUser);
+    setQuantity(parseInt(data.quantity, 10));// Parse the quantity as an integer
+    SetUser(data.name, data.mobile)
+
+    // post method for adding order in database
+
+
+    const res = await fetch(`${url}/orderItem`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newUser)
+    })
+
+    const responseData = await res.json();
+    if (responseData?.Inserted > 0) {
+      toast.success(responseData.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+    else{
+      toast.error(responseData.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+
+
+
+    // console.log(newUser);
+  };
+  // console.log(quantity,user )
   return (
     <div className="card w-[100%] bg-base-100 shadow-xl ">
+      <ToastContainer />
       <figure><img src={image} alt="Shoes" /></figure>
       <p className='bg-slate-900 e absolute right-0 mt-4 mr-4 p-2'>${price}</p>
       <div className="card-body flex flex-col items-center">
@@ -80,28 +96,28 @@ const FoodCard = ({ item }) => {
             <label className='text-sm'>
               Enter your Quantity:
               <input
-              className=' border bg-slate-100 py-1 px-4 rounded-md'
+                className=' border bg-slate-100 py-1 px-4 rounded-md'
                 type="number"
                 {...register('quantity', { required: true })}
-  required              />
+                required />
             </label>
             <label className='text-sm'>
-              Enter your Name :  
+              Enter your Name :
               <input
-              className=' border bg-slate-100 py-1 px-4 rounded-md'
+                className=' border bg-slate-100 py-1 px-4 rounded-md'
                 type="text"
                 {...register('name', { required: true })}
-              required/>
+                required />
             </label>
-         
+
             <label className='text-sm'>
 
               Enter your Mobile:
               <input
-              className=' border bg-slate-100 py-1 px-4 rounded-md'
+                className=' border bg-slate-100 py-1 px-4 rounded-md'
                 type="text"
                 {...register('mobile', { required: true })}
-              required/>
+                required />
             </label>
 
 
@@ -114,7 +130,7 @@ const FoodCard = ({ item }) => {
           </form>
         </div>
 
-   {/* \ */}
+        {/* \ */}
       </div>
     </div>
   );
