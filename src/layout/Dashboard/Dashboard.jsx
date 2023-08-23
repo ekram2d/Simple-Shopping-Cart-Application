@@ -20,7 +20,7 @@ const Dashboard = () => {
     <ul className="menu p-4 w-80 h-full text-black font-bold  shadow-2xl bg-gray-400">
       {/* Sidebar content here */}
       <li><NavLink to='statistics'><button className='btn shadow-2xl hover:scale-x-90  '>Stastics</button></NavLink> </li>
-      <li><NavLink to='/'><button className='btn shadow-2xl hover:scale-x-90  '>Stastics</button></NavLink> </li>
+      <li><NavLink to='/'><button className='btn shadow-2xl hover:scale-x-90  '>Home</button></NavLink> </li>
     </ul>
   
   </div>
