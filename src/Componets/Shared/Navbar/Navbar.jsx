@@ -31,7 +31,7 @@ const Navbar = () => {
                 <div className="hidden sm:block">
                     <ul className="flex space-x-4">
                         <li><Link to="/" className="text-white">Home</Link></li>
-                        <li><Link to="/about" className="text-white">About</Link></li>
+                        <li><Link to="/dashboard" className="text-white">Dashboard</Link></li>
                       
                         <li> <Link to="/order" className="text-gray-100  flex justify-center items-center">
             <FontAwesomeIcon icon={faShoppingCart} className="mr-2 font-bold text-2xl  " />
@@ -49,7 +49,7 @@ const Navbar = () => {
                     {menuOpen && (
                         <ul className="absolute top-12 right-0 bg-black text-white p-2 space-y-2 border shadow-2xl font-bold me-3">
                             <li><Link to="/" className="text-gray-100">Home</Link></li>
-                            <li><Link to="/about" className="text-gray-100">About</Link></li>
+                            <li><Link to="/dashboard" className="text-white">Dashboard</Link></li>
                           
                             <li> <Link to="/order" className="text-gray-100  flex justify-center items-center">
             <FontAwesomeIcon icon={faShoppingCart} className="mr-2 font-bold text-2xl  " />
