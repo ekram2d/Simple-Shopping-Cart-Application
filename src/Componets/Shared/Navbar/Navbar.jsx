@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getShoppingCart } from '../../utitilies/databse';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'; // Add this line
+
 
 const Navbar = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
+ 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+  const [orderdata, setOrderData] = useState([]);
 
-    const toggleMenu = () => {
-        setMenuOpen(!menuOpen);
-    };
+  useEffect(() => {
+    setOrderData(getShoppingCart());
+  }, []);
+
+  useEffect(() => {
+    console.log(orderdata); // Logging the entire orderdata array
+    console.log(orderdata.length); // Logging the length of the orderdata array
+  }, [orderdata]); 
 
     return (
         <nav className="bg-black p-4 mb-12">
@@ -18,8 +32,12 @@ const Navbar = () => {
                     <ul className="flex space-x-4">
                         <li><Link to="/" className="text-white">Home</Link></li>
                         <li><Link to="/about" className="text-white">About</Link></li>
-                        <li><Link to="/order" className="text-white">Order</Link></li>
-                        <li><Link to="/contact" className="text-white">Contact</Link></li>
+                      
+                        <li> <Link to="/order" className="text-gray-100  flex justify-center items-center">
+            <FontAwesomeIcon icon={faShoppingCart} className="mr-2 font-bold text-2xl  " />
+            <span className='font-bold text-2xl top-3  text-white rounded-xl'>{orderdata.length || 0}</span>
+          </Link></li>
+                        
                     </ul>
                 </div>
                 <div className="sm:hidden">
@@ -32,8 +50,11 @@ const Navbar = () => {
                         <ul className="absolute top-12 right-0 bg-black text-white p-2 space-y-2 border shadow-2xl font-bold me-3">
                             <li><Link to="/" className="text-gray-100">Home</Link></li>
                             <li><Link to="/about" className="text-gray-100">About</Link></li>
-                            <li><Link to="/order" className="text-white">Order</Link></li>
-                            <li><Link to="/contact" className="text-gray-100">Contact</Link></li>
+                          
+                            <li> <Link to="/order" className="text-gray-100  flex justify-center items-center">
+            <FontAwesomeIcon icon={faShoppingCart} className="mr-2 font-bold text-2xl  " />
+            <span className='font-bold text-2xl top-3  text-white rounded-xl'>{orderdata.length || 0}</span>
+          </Link></li>
                         </ul>
                     )}
                 </div>

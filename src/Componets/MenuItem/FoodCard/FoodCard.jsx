@@ -5,13 +5,14 @@ import { SetUser } from '../../../CustomHooks/SetUser/UserHook';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useUrl from '../../../CustomHooks/URL/UseUrl';
+import { addToDb } from '../../utitilies/databse';
 const FoodCard = ({ item }) => {
   const [url] = useUrl();
   const { name, image, price, recipe, id } = item;
   const [quantity, setQuantity] = useState(0);
   const inputRef = useRef(null);
   const [user, setuser] = useState('');
-
+ const[loading,setloading]=useState(false);
   // console.log(user)
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
@@ -23,11 +24,11 @@ const FoodCard = ({ item }) => {
 
   const onSubmit = async (data, e) => {
     e.preventDefault(); // Prevent form submission
-    console.log(data);
+   
     // console.log('Form submitted:', data);
     setQuantity(parseInt(data.quantity));// Parse the quantity as an integer
     SetUser(data.name, data.mobile)
-    const newUser = {
+    const OrderItem = {
       customer_name: data.name,
       mobile: data.mobile,
       quantity: parseInt(data.quantity),
@@ -37,46 +38,47 @@ const FoodCard = ({ item }) => {
       food_receipe: recipe,
       foodId: id
     };
-    setuser(newUser);
-
+    setuser(OrderItem);
+        addToDb(id,OrderItem)
+        setloading(!loading)
 
     // post method for adding order in database
 
 
-    const res = await fetch(`${url}/orderItem`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newUser)
-    })
+    // const res = await fetch(`${url}/orderItem`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(newUser)
+    // })
 
-    const responseData = await res.json();
+    // const responseData = await res.json();
 
-    if (responseData?.Inserted > 0) {
-      toast.success(responseData.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
-    else {
-      toast.error(responseData.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
+    // if (responseData?.Inserted > 0) {
+    //   toast.success(responseData.message, {
+    //     position: "top-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //   });
+    // }
+    // else {
+    //   toast.error(responseData.message, {
+    //     position: "top-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //   });
+    // }
 
 
 
@@ -105,7 +107,7 @@ const FoodCard = ({ item }) => {
                 required
               />
             </label>
-            <label className="text-sm">
+            {/* <label className="text-sm">
               Enter your Name:
               <input
                 className="border bg-slate-100 py-1 px-4 rounded-md"
@@ -122,7 +124,7 @@ const FoodCard = ({ item }) => {
                 {...register('mobile', { required: true })}
                 required
               />
-            </label>
+            </label> */}
             <button
               onClick={handleAddToCart}
               className="btn btn-outline border-0 border-b-4 bg-slate-100 border-orange-400 py-2 rounded-md hover:bg-slate-200 transition-colors"
