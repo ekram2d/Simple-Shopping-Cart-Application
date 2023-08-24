@@ -1,5 +1,6 @@
 // use local storage to manage cart data
 const addToDb = (id, OrderItem) => {
+    
       let shoppingCart = getShoppingCart();
     
       if (!Array.isArray(shoppingCart)) {

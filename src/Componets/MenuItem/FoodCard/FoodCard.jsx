@@ -8,7 +8,7 @@ import useUrl from '../../../CustomHooks/URL/UseUrl';
 import { addToDb } from '../../utitilies/databse';
 const FoodCard = ({ item }) => {
   const [url] = useUrl();
-  const { name, image, price, recipe, id } = item;
+  const { name, image, price, recipe, id,category } = item;
   const [quantity, setQuantity] = useState(0);
   const inputRef = useRef(null);
   const [user, setuser] = useState('');
@@ -24,6 +24,7 @@ const FoodCard = ({ item }) => {
 
   const onSubmit = async (data, e) => {
     e.preventDefault(); // Prevent form submission
+    
    
     // console.log('Form submitted:', data);
     setQuantity(parseInt(data.quantity));// Parse the quantity as an integer
@@ -36,8 +37,10 @@ const FoodCard = ({ item }) => {
       foodImg: image,
       foodPrice: price,
       food_receipe: recipe,
-      foodId: id
+      foodId: id,
+      foodCategory:category
     };
+   
     setuser(OrderItem);
         addToDb(id,OrderItem)
         setloading(!loading)

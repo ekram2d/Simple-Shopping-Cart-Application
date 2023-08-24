@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getShoppingCart } from '../../utitilies/databse';
+import { deleteShoppingCart, getShoppingCart } from '../../utitilies/databse';
 import { useForm } from 'react-hook-form';
 import useUrl from '../../../CustomHooks/URL/UseUrl';
-import { toast } from 'react-toastify';
+
+import { useNavigate } from 'react-router-dom';
 
 const Userorder = () => {
+      const navigate= useNavigate()
       const [orderdata, setOrderData] = useState([]);
       const [total, setTotal] = useState(0);
       const groupedOrders = {};
@@ -14,6 +16,7 @@ const Userorder = () => {
 
       useEffect(() => {
             const data = getShoppingCart();
+            
 
             if (Array.isArray(data)) {
                   setOrderData(data);
@@ -26,6 +29,8 @@ const Userorder = () => {
             }
       }, []);
 
+      
+
       const onSubmit = async (data, e) => {
             e.preventDefault();
 
@@ -35,6 +40,8 @@ const Userorder = () => {
                   orderdata_array: orderdata,
                   total: total,
             };
+
+           
 
             try {
                   const res = await fetch(`${url}/orderItem`, {
@@ -46,8 +53,11 @@ const Userorder = () => {
                   });
 
                   const responseData = await res.json();
+                 
 
-                  if (responseData?.Inserted > 0) {
+
+                  if (responseData.InsertedId > 0) {
+                        reset()
                         toast.success(responseData.message, {
                               position: "top-right",
                               autoClose: 5000,
@@ -57,7 +67,14 @@ const Userorder = () => {
                               draggable: true,
                               progress: undefined,
                               theme: "light",
+                              
                         });
+                        deleteShoppingCart();
+
+                        navigate('/')
+                        
+                    
+                       
                   } else {
                         toast.error(responseData.message, {
                               position: "top-right",
@@ -99,6 +116,7 @@ const Userorder = () => {
 
       return (
             <div className="pt-6">
+                 
                   {Object.keys(groupedOrders).map((mobile, index) => (
                         <div key={index} className="">
                               <h2 className="text-xl font-semibold mb-2">Mobile Number: {mobile}</h2>
@@ -128,11 +146,7 @@ const Userorder = () => {
                                                 </tr>
                                           </tbody>
                                     </table>
-                                    {/* <div className="flex justify-end mt-4">
-              <button onClick= {()=>handleOrder(Userorder)} className="bg-blue-500 text-white px-4 py-2 rounded hover:font-serif">
-              
-              </button>
-            </div> */}
+                        
                               </div>
                         </div>
                   ))}
