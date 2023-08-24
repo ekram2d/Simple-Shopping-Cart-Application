@@ -5,37 +5,63 @@ import OrderList from "../Componets/OrderList/OrderList";
 import Userorder from "../Componets/MenuItem/UserOrder/Userorder";
 import Dashboard from "../layout/Dashboard/Dashboard";
 import Statistics from "../layout/Dashboard/Statistics/Statistics";
+import AddMenu from "../layout/Dashboard/Addmenu/AddMenu";
+import AddEmploy from "../layout/Dashboard/Addemploy/AddEmploy";
+import Allmenu from "../layout/Dashboard/Allmenu/Allmenu";
+import Editmenu from "../layout/Dashboard/EditMenu/Editmenu";
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
       {
         path: "/",
-        element:<App></App>,
-        children: [
-          {
-            path: "/",
-            element:<Home></Home>
-          },{
-              path:'/order',
-              element:<Userorder></Userorder>
-          },
-        ],
-      
+        element: <Home />
       },
-
       {
-        path: 'dashboard',
-        element: <Dashboard></Dashboard>,
-        children: [
-          {
-            path: '', // Empty path for the default child route
-            element: <Home></Home>
-          },
-          {
-            path: 'statistics', // Relative path for the statistics child route
-            element: <Statistics></Statistics>
-          }
-        ],
-      }
+        path: '/order',
+        element: <Userorder />
+      },
+    ],
+  },
+
+  {
+    path: 'dashboard',
+    element: <Dashboard />,
+    children: [
+      {
+        path: '', // Empty path for the default child route
+        element: <Statistics />
+      },
+      {
+        path: 'allorder',
+        element: <OrderList />
+      },
+      {
+        path: 'allmenu',
+        element: <Allmenu />
+      },
+      {
+        path: 'addmenu',
+        element: <AddMenu/>
+      },
+      {
+        path: 'addemploy',
+        element: <AddEmploy/>
+      },
+      {
+        path: 'edit/:id',
+        element: <Editmenu/>
+      },
       
-    ]);
+      {
+        path: 'statistics',
+        element: <Statistics />
+      }
+    ],
+  }
+
+]);
+
 export default router;

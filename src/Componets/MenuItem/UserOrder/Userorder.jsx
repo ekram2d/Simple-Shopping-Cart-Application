@@ -18,7 +18,7 @@ const Userorder = () => {
       useEffect(() => {
             const data = getShoppingCart();
             
-
+       console.log(data)
             if (Array.isArray(data)) {
                   setOrderData(data);
                   const total = data.reduce((total, orderItem) => {
@@ -120,8 +120,10 @@ const Userorder = () => {
                  <ToastContainer/>
                   {Object.keys(groupedOrders).map((mobile, index) => (
                         <div key={index} className="">
-                              <h2 className="text-xl font-semibold mb-2">Mobile Number: {mobile}</h2>
-                              <div className="bg-white p-4 rounded shadow-md">
+                              <h2 className='text-center uppercase font-bold mb-2'>Please Order your cart items</h2>
+                              <hr/>
+                              {/* <h2 className="text-xl font-semibold mb-2">Mobile Number: {mobile}</h2> */}
+                              <div className="bg-white p-4 rounded shadow-2xl">
                                     <table className="w-full">
                                           <thead>
                                                 <tr className="bg-gray-100">

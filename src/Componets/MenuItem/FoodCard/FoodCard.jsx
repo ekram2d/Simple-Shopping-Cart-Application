@@ -8,7 +8,7 @@ import useUrl from '../../../CustomHooks/URL/UseUrl';
 import { addToDb } from '../../utitilies/databse';
 const FoodCard = ({ item }) => {
   const [url] = useUrl();
-  const { name, image, price, recipe, id,category } = item;
+  const { name, image, price, recipe, id } = item;
   const [quantity, setQuantity] = useState(0);
   const inputRef = useRef(null);
   const [user, setuser] = useState('');
@@ -24,7 +24,6 @@ const FoodCard = ({ item }) => {
 
   const onSubmit = async (data, e) => {
     e.preventDefault(); // Prevent form submission
-    
    
     // console.log('Form submitted:', data);
     setQuantity(parseInt(data.quantity));// Parse the quantity as an integer
@@ -37,16 +36,55 @@ const FoodCard = ({ item }) => {
       foodImg: image,
       foodPrice: price,
       food_receipe: recipe,
-      foodId: id,
-      foodCategory:category
+      foodId: id
     };
-   
     setuser(OrderItem);
         addToDb(id,OrderItem)
         setloading(!loading)
 
+    // post method for adding order in database
+
+
+    // const res = await fetch(`${url}/orderItem`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(newUser)
+    // })
+
+    // const responseData = await res.json();
+
+    // if (responseData?.Inserted > 0) {
+    //   toast.success(responseData.message, {
+    //     position: "top-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //   });
+    // }
+    // else {
+    //   toast.error(responseData.message, {
+    //     position: "top-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "light",
+    //   });
+    // }
+
+
+
+    // console.log(newUser);
   };
- 
+  // console.log(quantity,user )
   return (
     <div className="card bg-base-100 shadow-xl w-full md:w-[90%]  p-4 rounded-lg ">
       <ToastContainer />

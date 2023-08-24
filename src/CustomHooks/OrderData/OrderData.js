@@ -10,8 +10,9 @@ export const OrderData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${url}/orderItem`);
+        const response = await axios.get(`${url}/orders`);
         setOrder(response.data);
+        console.log(response.data)
         setIsLoading(false);
       } catch (error) {
         setError(error);
@@ -22,15 +23,16 @@ export const OrderData = () => {
     fetchData();
   }, []);
 
-  const groupedOrders = {};
-  order.forEach(item => {
-    if (!groupedOrders[item.mobile]) {
-      groupedOrders[item.mobile] = [];
-    }
-    groupedOrders[item.mobile].push(item);
-  });
-  console.log(groupedOrders)
+
+  // const groupedOrders = {};
+  // order.forEach(item => {
+  //   if (!groupedOrders[item.mobile]) {
+  //     groupedOrders[item.mobile] = [];
+  //   }
+  //   groupedOrders[item.mobile].push(item);
+  // });
+  // console.log(groupedOrders)
 
   // Return the fetched data, loading state, and error state as an object
-  return { order, isLoading, error,groupedOrders };
+  return { order, isLoading, error };
 };
