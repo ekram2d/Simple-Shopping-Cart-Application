@@ -45,49 +45,8 @@ const FoodCard = ({ item }) => {
         addToDb(id,OrderItem)
         setloading(!loading)
 
-    // post method for adding order in database
-
-
-    // const res = await fetch(`${url}/orderItem`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(newUser)
-    // })
-
-    // const responseData = await res.json();
-
-    // if (responseData?.Inserted > 0) {
-    //   toast.success(responseData.message, {
-    //     position: "top-right",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //   });
-    // }
-    // else {
-    //   toast.error(responseData.message, {
-    //     position: "top-right",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     theme: "light",
-    //   });
-    // }
-
-
-
-    // console.log(newUser);
   };
-  // console.log(quantity,user )
+ 
   return (
     <div className="card bg-base-100 shadow-xl w-full md:w-[90%]  p-4 rounded-lg ">
       <ToastContainer />

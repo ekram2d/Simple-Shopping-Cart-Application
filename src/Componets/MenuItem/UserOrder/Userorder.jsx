@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import useUrl from '../../../CustomHooks/URL/UseUrl';
 
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Userorder = () => {
       const navigate= useNavigate()
@@ -71,7 +72,7 @@ const Userorder = () => {
                         });
                         deleteShoppingCart();
 
-                        navigate('/')
+                       
                         
                     
                        
@@ -116,7 +117,7 @@ const Userorder = () => {
 
       return (
             <div className="pt-6">
-                 
+                 <ToastContainer/>
                   {Object.keys(groupedOrders).map((mobile, index) => (
                         <div key={index} className="">
                               <h2 className="text-xl font-semibold mb-2">Mobile Number: {mobile}</h2>
