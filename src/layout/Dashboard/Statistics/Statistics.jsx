@@ -5,10 +5,33 @@ import StackBarChart from '../Stackbarchart/StackBarChart';
 const Statistics = () => {
   const { order, isLoading, error, groupedOrders } = OrderData();
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   // Calculate statistics
   const totalCustomer = new Set(order.map(item => item.name)).size;
   const totalQuantity = order.reduce((acc, item) => acc + item.items[0].quantity, 0);
-  const totalPrice = order.reduce((acc, item) => acc + item.items[0].food_price * item.items[0].quantity, 0);
+  const totalPrice = order.reduce((acc, item) => acc + item.total, 0); // Using the 'total' field
+
+  // Prepare data for the stacked bar chart
+  const categoryData = {}; // Example: { "Category1": 100, "Category2": 200, ... }
+  order.forEach(item => {
+    const category = item.items[0].foodCategory || "Uncategorized"; // Using 'foodCategory'
+    if (!categoryData[category]) {
+      categoryData[category] = 0;
+    }
+    categoryData[category] += item.items[0].food_price * item.items[0].quantity;
+  });
+
+  const categoryChartData = Object.entries(categoryData).map(([category, totalPrice]) => ({
+    category,
+    totalPrice
+  }));
 
   return (
     <div className="p-8 text-center w-[100%] mb-3 mx-auto">
@@ -29,7 +52,7 @@ const Statistics = () => {
         </div>
       </div>
 
-      <section className='mt-5'>
+      <section className="mt-5">
         <StackBarChart />
       </section>
     </div>
