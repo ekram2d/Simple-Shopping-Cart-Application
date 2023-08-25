@@ -5,7 +5,6 @@ const AddMenu = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
-      
     try {
       // Make a POST request to your API here with the data
       // Handle the result as needed
@@ -14,11 +13,14 @@ const AddMenu = () => {
     }
   };
 
+  // Category options
+  const categoryOptions = ['dessert', 'soup', 'salad', 'pizza', 'drinks'];
+
   return (
-    <div className="w-full flex justify-center items-center  bg-gray-100">
-      <div className="w-full  bg-white p-6 rounded shadow-md">
+    <div className="w-full flex justify-center items-center bg-gray-100">
+      <div className="w-full bg-white p-6 rounded shadow-md">
         <h1 className="text-2xl font-bold mb-4 text-center">Add New Menu Item</h1>
-         < hr/>
+        <hr />
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-1">Name</label>
@@ -47,11 +49,20 @@ const AddMenu = () => {
           </div>
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-1">Category</label>
-            <input type="text" className="w-full text-white border border-gray-300 px-3 py-2 rounded" {...register('category', { required: true })} />
-            {errors.category && <p className="text-red-500 text-xs mt-1">This field is required</p>}
+            <select className="w-full text-white border border-gray-300 px-3 py-2 rounded" {...register('category', { required: true })}>
+              <option value="">Select a category</option>
+              {categoryOptions.map((category, index) => (
+                <option key={index} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            {errors.category && <p className="text-red-500 text-xs mt-1">Please select a category</p>}
           </div>
           <div className="mt-4">
-            <button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Item</button>
+            <button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+              Add Item
+            </button>
           </div>
         </form>
       </div>
