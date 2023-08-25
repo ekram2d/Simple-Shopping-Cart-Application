@@ -1,16 +1,70 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import useUrl from '../../../CustomHooks/URL/UseUrl';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 const AddMenu = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-
+  const[url]=useUrl();
   const onSubmit = async (data) => {
     try {
-      // Make a POST request to your API here with the data
-      // Handle the result as needed
-    } catch (error) {
-      console.error(error);
-    }
+      const res = await fetch(`${url}/menu`, {
+            method: 'POST',
+            headers: {
+                  'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+      });
+
+      const responseData = await res.json();
+     
+
+
+      if (responseData.InsertedId > 0) {
+         
+            toast.success(responseData.message, {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                  
+            });
+            // deleteShoppingCart();
+
+           
+            
+        
+           
+      } else {
+            toast.error(responseData.message, {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+            });
+      }
+} catch (error) {
+      console.error("Error while sending the order:", error);
+      toast.error("Error while sending the order. Please try again later.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+      });
+}
   };
 
   // Category options
@@ -21,6 +75,7 @@ const AddMenu = () => {
       <div className="w-full bg-white p-6 rounded shadow-md">
         <h1 className="text-2xl font-bold mb-4 text-center">Add New Menu Item</h1>
         <hr />
+        <ToastContainer></ToastContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-1">Name</label>
