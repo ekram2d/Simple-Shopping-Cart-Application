@@ -18,7 +18,7 @@ const Allmenu = () => {
   };
 
   const handleDelete = (item) => {
-    console.log('Delete item:', item);
+    console.log('Delete item:', item.id);
   };
 
   const filteredMenu = menu.filter(item =>
@@ -33,9 +33,8 @@ const Allmenu = () => {
         {categories.map(category => (
           <button
             key={category}
-            className={`mr-2 px-3 py-1 rounded border ${
-              selectedCategory === category ? 'bg-blue-500 text-white border-blue-500' : ''
-            }`}
+            className={`mr-2 px-3 py-1 rounded border ${selectedCategory === category ? 'bg-blue-500 text-white border-blue-500' : ''
+              }`}
             onClick={() => handleCategoryChange(category)}
           >
             {category}
@@ -76,11 +75,11 @@ const Allmenu = () => {
               </td>
               <td className="border p-2">{item.recipe}</td>
               <td className="border p-2">
-              <Link to={`/dashboard/edit/${item.id}`}>
-  <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">
-    Edit
-  </button>
-</Link>
+                <Link to={`/dashboard/edit/${item.id}`}>
+                  <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">
+                    Edit
+                  </button>
+                </Link>
 
 
                 <button onClick={() => handleDelete(item)} className="bg-red-500 text-white px-2 py-1 rounded">

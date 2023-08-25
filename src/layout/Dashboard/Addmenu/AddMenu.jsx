@@ -8,6 +8,7 @@ const AddMenu = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const[url]=useUrl();
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       const res = await fetch(`${url}/menu`, {
             method: 'POST',

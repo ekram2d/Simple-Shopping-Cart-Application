@@ -23,16 +23,5 @@ export const OrderData = () => {
     fetchData();
   }, []);
 
-
-  // const groupedOrders = {};
-  // order.forEach(item => {
-  //   if (!groupedOrders[item.mobile]) {
-  //     groupedOrders[item.mobile] = [];
-  //   }
-  //   groupedOrders[item.mobile].push(item);
-  // });
-  // console.log(groupedOrders)
-
-  // Return the fetched data, loading state, and error state as an object
   return { order, isLoading, error };
 };
