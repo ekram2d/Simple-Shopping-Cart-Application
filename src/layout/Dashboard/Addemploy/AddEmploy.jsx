@@ -22,7 +22,7 @@ const AddEmploy = () => {
   };
 
   return (
-    <div className="flex w-full justify-center items-center  m-3 mx-auto p-4">
+    <div className="flex w-full justify-center items-center text-amber-100  m-3 mx-auto p-4">
       <div className="w-full font-bold   p-6 rounded shadow-2xl bg-gray-800 ">
         <h1 className="text-2xl font-bold mb-4 text-center text-white">Add Employee</h1>
         <form onSubmit={handleSubmit}>
@@ -44,6 +44,17 @@ const AddEmploy = () => {
               name="email"
               className="w-full border border-gray-300 bg-white focus:ring focus:ring-blue-300 px-3 py-2 rounded"
               value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-1">Id</label>
+            <input
+              type="number"
+              name="id"
+              className="w-full border border-gray-300 bg-white focus:ring focus:ring-blue-300 px-3 py-2 rounded"
+              value={formData.id}
               onChange={handleChange}
               required
             />
