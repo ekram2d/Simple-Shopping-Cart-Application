@@ -3,7 +3,7 @@ import { OrderData } from '../../CustomHooks/OrderData/OrderData';
 
 const OrderList = () => {
   const { order, isLoading, error } = OrderData();
-console.log(order);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -13,10 +13,10 @@ console.log(order);
   }
 
   return (
-    <div className="p-6 w-full bg-black text-white h-screen">
+    <div className="p-6 w-full bg-black text-white ">
       <table className="w-full border border-gray-300">
         <thead>
-          <tr className="">
+          <tr>
             <th className="border px-4 py-2">Mobile Number</th>
             <th className="border px-4 py-2">Name</th>
             <th className="border px-4 py-2">Order ID</th>
@@ -33,10 +33,14 @@ console.log(order);
               <td className="border px-4 py-2">{orderItem.mobile}</td>
               <td className="border px-4 py-2">{orderItem.name}</td>
               <td className="border px-4 py-2">{orderItem.order_id}</td>
-              <td className="border px-4 py-2">{orderItem.items[0].food_id}</td>
-              <td className="border px-4 py-2">{orderItem.items[0].food_name}</td>
-              <td className="border px-4 py-2">{orderItem.items[0].food_price}</td>
-              <td className="border px-4 py-2">{orderItem.items[0].quantity}</td>
+              {orderItem?.items?.map((item, index) => (
+                <React.Fragment key={index}>
+                  <td className="border px-4 py-2">{item.food_id}</td>
+                  <td className="border px-4 py-2">{item.food_name}</td>
+                  <td className="border px-4 py-2">{item.food_price}</td>
+                  <td className="border px-4 py-2">{item.quantity}</td>
+                </React.Fragment>
+              ))}
               <td className="border px-4 py-2">{orderItem.total}</td>
             </tr>
           ))}
@@ -47,4 +51,3 @@ console.log(order);
 };
 
 export default OrderList;
-
