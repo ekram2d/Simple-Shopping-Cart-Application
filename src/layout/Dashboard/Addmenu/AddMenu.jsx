@@ -5,6 +5,7 @@ const AddMenu = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       // Make a POST request to your API here with the data
       // Handle the result as needed
