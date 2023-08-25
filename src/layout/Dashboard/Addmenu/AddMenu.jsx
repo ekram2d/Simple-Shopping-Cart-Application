@@ -37,20 +37,21 @@ const AddMenu = () => {
             <input type="number" step="0.01" className="w-full  border border-gray-300 px-3 py-2 rounded" {...register('price', { required: true })} />
             {errors.price && <p className="text-red-500 text-xs mt-1">This field is required</p>}
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-semibold mb-1">Recipe</label>
-            <textarea className="w-full border  border-gray-300 px-3 py-2 rounded" {...register('recipe', { required: true })} />
-            {errors.recipe && <p className="text-red-500 text-xs mt-1">This field is required</p>}
-          </div>
-          <div className="mb-4">
+      
+          {/* <div className="mb-4">
             <label className="block text-sm font-semibold mb-1">ID</label>
             <input type="text" className="w-full border  border-gray-300 px-3 py-2 rounded" {...register('id', { required: true })} />
             {errors.id && <p className="text-red-500 text-xs mt-1">This field is required</p>}
-          </div>
+          </div> */}
           <div className="mb-4">
             <label className="block text-sm font-semibold mb-1">Category</label>
             <input type="text" className="w-full text-white border border-gray-300 px-3 py-2 rounded" {...register('category', { required: true })} />
             {errors.category && <p className="text-red-500 text-xs mt-1">This field is required</p>}
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-1">Recipe</label>
+            <textarea className="w-full border  border-gray-300 px-3 py-2 rounded" {...register('recipe', { required: true })} />
+            {errors.recipe && <p className="text-red-500 text-xs mt-1">This field is required</p>}
           </div>
           <div className="mt-4">
             <button type="submit" className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Item</button>
