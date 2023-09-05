@@ -6,7 +6,7 @@ export const OrderData = () => {
   const [order, setOrder] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-   const[url]=useUrl();
+  const [url] = useUrl();
   useEffect(() => {
     const fetchData = async () => {
       try {

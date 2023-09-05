@@ -3,7 +3,7 @@ import axios from "axios";
 import useUrl from "../URL/UseUrl";
 
 export const MenuData = () => {
-  const [url]=useUrl();
+  const [url] = useUrl();
   const [menu, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
