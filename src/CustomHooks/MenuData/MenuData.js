@@ -7,7 +7,7 @@ export const MenuData = () => {
   const [menu, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  //console.log(data);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,7 +22,7 @@ export const MenuData = () => {
     };
 
     fetchData();
-  }, []); // The dependency array should be empty to fetch data only once
+  }, []); 
 
   return { menu, isLoading, error };
 };
